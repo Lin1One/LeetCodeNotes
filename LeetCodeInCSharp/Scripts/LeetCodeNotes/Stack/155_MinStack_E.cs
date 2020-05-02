@@ -257,7 +257,42 @@ namespace Study.LeetCode
             }
         }
 
+        public class MinStack4
+        {
+            private Stack<int> m_Stack = new Stack<int>();
+            private int min;
+            public void Push(int x)
+            {
+                if(m_Stack.Count == 0)
+                {
+                    min = x;
+                    m_Stack.Push(0);
+                    return;
+                }
+                var newValue = x - min;
+                if(newValue < 0)
+                {
+                    min = x;
+                }
+                m_Stack.Push(newValue);
+            }
 
+            public int Pop()
+            {
+                var value = m_Stack.Pop();
+                if(value > 0)
+                {
+                    value = value + min;
+                }
+                else
+                {
+                    var temp = min;
+                    min = min - value;
+                    value = temp;
+                }
+                return value;
+            }
+        }
     }
 }
 
