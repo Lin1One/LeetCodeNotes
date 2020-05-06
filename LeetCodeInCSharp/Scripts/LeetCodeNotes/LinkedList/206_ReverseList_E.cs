@@ -24,6 +24,28 @@ namespace Study.LeetCode
         *     public ListNode(int x) { val = x; }
         * }
         */
+
+
+        public ListNode ReverseList0507(ListNode head)
+        {
+            //循环
+            //双指针分别为 上一个节点（初始为 null），当前节点（初始为头节点）
+            //1.循环中临时保存当前节点的下一节点 temp。
+            //2.当前节点的下一节点指向上一个节点 prev。
+            //3.上一节点往前至当前节点 curNode ，，当前节点往前至临时保存的下一节 temp，下一轮循环
+            //4.当前节点为空，返回上一节点 prev。
+            ListNode prev = null;
+            ListNode curNode = head;
+            while(curNode != null)
+            {
+                var curNext = curNode.next;
+                curNode.next = prev;
+                prev = curNode;
+                curNode = curNext;
+            }
+            return prev;
+        }
+
         public ListNode ReverseList_Test(ListNode head)
         {
             if(head == null)
