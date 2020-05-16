@@ -21,7 +21,7 @@ namespace Study.LeetCode
 
         // 输入的数组长度范围在 [1, 10,000]。
         // 输入的数组可能包含重复元素 ，所以升序的意思是<=。
-        public int FindUnsortedSubarray1(int[] nums) 
+        public int FindUnsortedSubarray1(int[] nums)
         {
             if(nums == null )
             {
@@ -65,35 +65,32 @@ namespace Study.LeetCode
             return rightIndex - leftIndex + 1;
             
         }
-
         public int FindUnsortedSubarray(int[] nums) 
         {
-        //从左到右扫描（或从右到左）找局部极大值（或局部极小值），若位置放置不正确，找到其应该存在的地方
-        int length = nums.Length;
-        //赋初始开始和结束值
-        int leftIndex = -1;
-        int rightIndex = -2;
-        //结束值赋为-2是考虑在数组本身就是有序时,return也可以给出正确值
-        int min = nums[length - 1];
-        int max = nums[0];
-        for(int i = 0, pos = 0; i < length; i++) 
-        {
-            pos = length - 1 - i;
-            //找出局部极大、极小值
-            max = Math.Max(max, nums[i]);
-            min = Math.Min(min, nums[pos]);
-            //如果当前值小于局部极大值，用end记录该位置，找到该max的合适位置，
-            if(nums[i] < max)
-                rightIndex = i;
-            //如果当前值大于局部极小值，用star记录该位置，找到该star的合适位置
-            if(nums[pos] > min)
-                leftIndex = pos;
+            //从左到右扫描（或从右到左）找局部极大值（或局部极小值），若位置放置不正确，找到其应该存在的地方
+            int length = nums.Length;
+            //赋初始开始和结束值
+            int leftIndex = -1;
+            int rightIndex = -2;
+            //结束值赋为-2是考虑在数组本身就是有序时,return也可以给出正确值
+            int min = nums[length - 1];
+            int max = nums[0];
+            for(int i = 0, pos = 0; i < length; i++) 
+            {
+                pos = length - 1 - i;
+                //找出局部极大、极小值
+                max = Math.Max(max, nums[i]);
+                min = Math.Min(min, nums[pos]);
+                //如果当前值小于局部极大值，用end记录该位置，找到该max的合适位置，
+                if(nums[i] < max)
+                    rightIndex = i;
+                //如果当前值大于局部极小值，用star记录该位置，找到该star的合适位置
+                if(nums[pos] > min)
+                    leftIndex = pos;
+            }
+            //返回开始和结束的索引差
+            return rightIndex - leftIndex + 1;
         }
-        //返回开始和结束的索引差
-        return rightIndex - leftIndex + 1;
-    }
-
-
 
     }
 }

@@ -26,11 +26,44 @@ namespace Study.LeetCode
         // 输出: 5
         // 解释: 节点 5 和节点 4 的最近公共祖先是节点 5。
         // 因为根据定义最近公共祖先节点可以为节点本身。
-
-
         
+        // 说明:
+        // 所有节点的值都是唯一的。
+        // p、q 为不同节点且均存在于给定的二叉树中。
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            TreeNode resultNode = root;
+            isTargetsRoot(root,p,q,ref resultNode);
+            return resultNode;
+        }
+
+        private bool isTargetsRoot(TreeNode root,TreeNode p, TreeNode q,ref TreeNode result)
+        {
+            if(root == null)
+            {
+                //result = null;
+                return false;
+            }
+            var leftNodeIsRoot = isTargetsRoot(root.left,p,q, ref result);
+            var rightNodeIsRoot = isTargetsRoot(root.right,p,q,ref result);
+            var curNodeIsRoot = root == p||root == q;
+            if(leftNodeIsRoot && rightNodeIsRoot)
+            {
+                result = root;
+            }
+            if(leftNodeIsRoot && curNodeIsRoot)
+            {
+                result = root;
+            }
+            if(rightNodeIsRoot && curNodeIsRoot)
+            {
+                result = root;   
+            }
+            return leftNodeIsRoot || rightNodeIsRoot || curNodeIsRoot;
+        }
         private TreeNode ans;
-        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
+        public TreeNode LowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q)
         {
             // 方法一：递归
             // 这种方法非常直观。先深度遍历改树。
@@ -80,6 +113,7 @@ namespace Study.LeetCode
             }
             return leftTreeHaveTarget || rightTreeHaveTarget || currentNodeIsTarget;
         }
+        
         // private boolean recurseTree(TreeNode currentNode, TreeNode p, TreeNode q) {
 
         //     // If reached the end of a branch, return false.
@@ -107,10 +141,6 @@ namespace Study.LeetCode
         //     // Return true if any one of the three bool values is True.
         //     return (mid + left + right > 0);
         // }
-
-
-
-
 
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
         {
@@ -147,8 +177,6 @@ namespace Study.LeetCode
         // 第二次 parent_node == p or parent_node == q 意味着我们找到了两个节点，我们可以返回 LCA node。
         // 每当我们访问 parent_node 的子节点时，我们将 (parent_node, updated_parent_state) 推到堆栈上。我们更新父级的状态为子级/分支已被访问/处理，并且相应地更改状态。
         // 当状态变为 BOTH_DONE 时，最终会从堆栈中弹出一个节点，这意味着左、右子树都被推到堆栈上并进行处理。如果 one_node_found 是 true 的，那么我们需要检查被弹出的顶部节点是否可能是找到的节点的祖先之一。在这种情况下，我们需要将LCA_index减少一个。因为其中一位祖先被弹出了。 当同时找到 p 和 q 时，LCA_index 将指向堆栈中包含 p 和 q 之间所有公共祖先的索引。并且 LCA_index 元素具有p和q之间的最近公共祖先。
-
-
 
     }
 }
